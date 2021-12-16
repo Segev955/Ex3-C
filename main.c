@@ -1,22 +1,53 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
 #include <stdio.h>
+#include <string.h>
+#include "main.h"
 #define TXT 1024
 #define WORD 30
+
 int main()
 {
-    char c[5] = {'a','b','c','d','\0'};
-    // c = "abc";
-    // int a = sumOfWord(c)
-    int p =sizeof(c); 
+	
+/*    char s1[] = "Helloworld";
+    char s2[] = "laH";
+    char s3 = s2[2];
+    char *result;
+    result = strchr(s1, s3);
+    if (strchr(s1, s3))
+    printf("The matching character : %c\n", *result);*/
+    int sumOfWord(char str[]);
+    char c[WORD] = "a";//= {'a','b','c','d','\0'};
+    int i = 0;
+    do {
+        scanf("%[^\n]", &c[i]);
+        i += 1;
+    }
+    while (c[i-1] != '\n' && c[i-1] != '\t' && c[i-1] != ' ');
+    c[i] = '\0';
+      //printf("%s",c);  
     int sum = 0;
     sum = sumOfWord(c);
-    char text2[7] = {'a','-','b','c',',','d','\0'};
+    char text2[TXT];
+    i = 0;
+    do {
+        scanf("%[^\n]", &text2[i]);
+        i += 1;
+    }
+    while (text2[i-1] != '~');
+    text2[i] = '\0';
+    // scanf("%[^\n]", &text2); 
     char s[TXT];
-    
-    geo(sum,text2,s);
-    // *(s+10) = '\0';
-    printf("%s",s);
-    
-    // printf("%d",sum);
+    //gimel(text2,s,c);
+    printf("\n");
+    printf("%s",text2);
+
 
     return 0;
 }
@@ -24,7 +55,7 @@ int main()
 int sumOfWord(char str[]) {
     int sum = 0;
     for (int i = 0; i < strlen(str); i++) {
-        if (str[i] >= 'A' && str[i] <= 'Z') {
+	if (str[i] >= 'A' && str[i] <= 'Z') {
             sum += (str[i] - ('A'-1));
         
         }
@@ -43,6 +74,7 @@ void geo(int fsum, char text[],char s[]) {
     int y = 0;
     for (int i = 0; i < strlen(text); i++) {
         int sum = 0;
+        if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) {
         for (int j = i; j < strlen(text); j++) {
             if (text[j] >= 'A' && text[j] <= 'Z') {
                 sum += (text[j] - ('A'-1));
@@ -59,20 +91,73 @@ void geo(int fsum, char text[],char s[]) {
                 x += 1;
                 // continue;
             }
-/*            if (fsum < sum) { //if sum bigger then
+            if (fsum < sum) { //if sum bigger then
                 *(s+y) = '\0';
                 x = y;
                 break;
-            }*/
+            }
             if (fsum == sum) { //if equal -> return
-                *(s+x) = '\0';
-                y = x;
+                *(s+x) = '~';
+                y = x+1;
+                x+=1;
                 break;
             }
 
         }
         *(s+y) = '\0';
         x = y;
+        }
     }
-    // return s;
+    *(s+y-1) = '\0';
 }
+
+void gimel(char text[],char s[],char word[]) {
+    int x = 0;
+    int y = 0;
+    for (int i = 0; i < strlen(text); i++) {
+        char tempWord[TXT];
+        strcpy(tempWord, word);
+        if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) {
+            for (int j = i; j < strlen(text); j++) {
+                char *result;
+                char s1 = text[j];
+                if (s1 == ' ') {
+                    *(s+x) = s1;
+                    x += 1;
+                    continue;
+                }
+                if (strchr(word, s1)) { // if word contain char
+                    result = strchr(word, s1);
+                    *(s+x) = *result;
+                    x += 1;
+                    removeChar(tempWord,s1);
+                }
+                else {
+                    *(s+y) = '\0';
+                    x = y;
+                    break;
+                }
+                if (!strpbrk(word, tempWord)) { // if tempWord dont contain chars from word
+                    *(s+x) = '~';
+                    y = x+1;
+                    x+=1;
+                    break;
+                }
+            }
+        }
+    }
+    *(s+y-1) = '\0';
+}
+
+
+
+void removeChar(char tempWord[],char s1) {
+    for (int i = 0; i < strlen(tempWord); i++) {
+        if (tempWord[i] == s1) {
+            *(tempWord+i) = ' ';
+        }
+    }
+}
+
+
+
