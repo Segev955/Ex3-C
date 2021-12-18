@@ -21,10 +21,24 @@ int main() {
         }
         scanf("%c", &text[i]);
     }
-    printf("%s", word);
-    printf("\n");
-    printf("%s", text);
 
+    int sum = sumOfWord(word);
+    char s1[TXT];
+    geo(sum,text,s1);
+    printf("\n");
+    printf("Gematria Sequences: ");
+    printf("%s", s1);
+/*    char s2[TXT];
+    atbash(text,s2,word);
+    printf("\n");
+    printf("Atbash Sequences: ");
+    printf("%s", s2);*/
+    char s3[TXT];
+    anagram(text,s3,word);
+    printf("\n");
+    printf("Anagram Sequences: ");
+    printf("%s", s3);
+    printf("\n");
 
     return 0;
 }
@@ -84,11 +98,11 @@ void geo(int fsum, char text[], char s[]) {
     *(s + y - 1) = '\0';
 }
 
-void gimel(char text[], char s[], char word[]) {
+void anagram(char text[], char s[], char word[]) {
     int x = 0;
     int y = 0;
     for (int i = 0; i < strlen(text); i++) {
-        char tempWord[TXT];
+        char tempWord[strlen(word)];
         strcpy(tempWord, word);
         if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) {
             for (int j = i; j < strlen(text); j++) {
@@ -104,21 +118,25 @@ void gimel(char text[], char s[], char word[]) {
                     *(s + x) = *result;
                     x += 1;
                     removeChar(tempWord, s1);
+                    
                 } else {
                     *(s + y) = '\0';
                     x = y;
                     break;
                 }
-                if (!strpbrk(word, tempWord)) { // if tempWord dont contain chars from word
+                if (contain(tempWord) == 1) { // if tempWord dont contain chars from word
+
                     *(s + x) = '~';
                     y = x + 1;
                     x += 1;
                     break;
                 }
+                        
             }
         }
     }
     *(s + y - 1) = '\0';
+
 }
 
 
@@ -128,4 +146,12 @@ void removeChar(char tempWord[], char s1) {
             *(tempWord + i) = ' ';
         }
     }
+}
+int contain(char tempWord[]) {
+    for (int i = 0; i < strlen(tempWord); i++) {
+        if ((tempWord[i] >= 'A' && tempWord[i] <= 'Z') || (tempWord[i] >= 'a' && tempWord[i] <= 'z')) {
+            return 0;
+        }
+    }
+    return 1;
 }
