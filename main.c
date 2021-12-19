@@ -46,7 +46,6 @@ int main() {
     anagram(text,s3,word);
     printf("Anagram Sequences: ");
     printf("%s", s3);
-    printf("\n");
     return 0;
 }
 //checks sum of the word
