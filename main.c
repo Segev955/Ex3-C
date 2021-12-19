@@ -3,6 +3,8 @@
 #include "main.h"
 #define TXT 1024
 #define WORD 30
+#define true 1
+#define false 0
 
 int main() {
     char word[WORD];
@@ -65,8 +67,8 @@ int sumOfWord(char str[]) {
 }
 
 void geo(int fsum, char text[], char s[]) {
-    int x = 0;
-    int y = 0;
+    int x = 0; //curr
+    int y = 0; //last
     for (int i = 0; i < strlen(text); i++) {
         int sum = 0;
         if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) {
@@ -103,7 +105,7 @@ void geo(int fsum, char text[], char s[]) {
     }
     *(s + y - 1) = '\0';
 }
-
+//return the atbash word
 void toAtbash(char atWord[]) {
     for (int i = 0; i < strlen(atWord); i++) {
         if (atWord[i] >= 'A' && atWord[i] <= 'Z') {
@@ -116,7 +118,7 @@ void toAtbash(char atWord[]) {
         }
     }
 }
-
+// reverse
 void reverse(char reWord[],char atWord[]) {
     for (int i = 0, j = strlen(atWord)-2; i < strlen(atWord); i++,j--) {
         *(reWord+i) = atWord[j];
@@ -125,13 +127,12 @@ void reverse(char reWord[],char atWord[]) {
 }
 
 void atbash(char atWord[],char reWord[],char text[], char s[]) {
-    int x = 0;
-    int y = 0;
+    int x = 0; //curr
+    int y = 0; //last
     for (int i = 0; i < strlen(text); i++) {
         char tempWord[WORD];
-        int t = 0;
-        int t2 = 0;
-        // strcpy(tempWord, atWord);
+        int t = 0; //tempWord index
+        int t2 = 0; //temp
         if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) {
         for (int j = i; j < strlen(text); j++) {
                 char s1 = text[j];
@@ -178,15 +179,15 @@ int checkWord(char atWord[],char tempWord[]) {
                 continue;
             }
             if (tempWord[i] != atWord[j]) {
-                return 0;
+                return false;
             }
             j++;
         }
     }
     else {
-        return 0;
+        return false;
     }
-    return 1;
+    return true;
 }
 
 void anagram(char text[], char s[], char word[]) {
@@ -225,7 +226,7 @@ void anagram(char text[], char s[], char word[]) {
                     x = y;
                     break;
                 }
-                if (contain(tempWord) == 1) { // if tempWord dont contain chars from word
+                if (contain(tempWord) == true) { // if tempWord dont contain chars from word
                     *(s + x) = '~';
                     y = x + 1;
                     x += 1;
@@ -242,7 +243,7 @@ void anagram(char text[], char s[], char word[]) {
 
 }
 
-
+// remove char
 void removeChar(char tempWord[], char s1) {
     for (int i = 0; i < strlen(tempWord); i++) {
         if (tempWord[i] == s1) {
@@ -250,13 +251,14 @@ void removeChar(char tempWord[], char s1) {
         }
     }
 }
+// if contain chars from word
 int contain(char tempWord[]) {
     for (int i = 0; i < strlen(tempWord); i++) {
         if ((tempWord[i] >= 'A' && tempWord[i] <= 'Z') || (tempWord[i] >= 'a' && tempWord[i] <= 'z')) {
-            return 0;
+            return false;
         }
     }
-    return 1;
+    return true;
 }
 
 
