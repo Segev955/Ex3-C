@@ -25,9 +25,9 @@ int main() {
     int sum = sumOfWord(word);
     char s1[TXT];
     geo(sum,text,s1);
-    printf("\n");
     printf("Gematria Sequences: ");
     printf("%s", s1);
+    printf("\n");
     
     //Atbash
     char atWord[WORD];
@@ -37,21 +37,19 @@ int main() {
     reverse(reWord,atWord);
     char s2[TXT];
     atbash(atWord,reWord,text,s2);
-    printf("\n");
     printf("Atbash Sequences: ");
     printf("%s", s2);
+    printf("\n");
     //Anagram
     
     char s3[TXT];
     anagram(text,s3,word);
-    printf("\n");
     printf("Anagram Sequences: ");
     printf("%s", s3);
     printf("\n");
-
     return 0;
 }
-
+//checks sum of the word
 int sumOfWord(char str[]) {
     int sum = 0;
     for (int i = 0; i < strlen(str); i++) {
