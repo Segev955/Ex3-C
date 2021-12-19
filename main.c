@@ -192,22 +192,31 @@ int checkWord(char atWord[],char tempWord[]) {
 void anagram(char text[], char s[], char word[]) {
     int x = 0;
     int y = 0;
+    int c = WORD;
     for (int i = 0; i < strlen(text); i++) {
+        int t = 0;
         char tempWord[strlen(word)];
         strcpy(tempWord, word);
         if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) {
             for (int j = i; j < strlen(text); j++) {
+                if (t > c) {
+                    *(s + y) = '\0';
+                    x = y;
+                    break;
+                }
                 char *result;
                 char s1 = text[j];
                 if (s1 == ' ') {
                     *(s + x) = s1;
                     x += 1;
+                    t += 1;
                     continue;
                 }
                 if (strchr(word, s1)) { // if word contain char
                     result = strchr(word, s1);
                     *(s + x) = *result;
                     x += 1;
+                    t += 1;
                     removeChar(tempWord, s1);
                     
                 } 
@@ -220,6 +229,9 @@ void anagram(char text[], char s[], char word[]) {
                     *(s + x) = '~';
                     y = x + 1;
                     x += 1;
+                    if (t < c) {
+                        c = t;
+                    }
                     break;
                 }
                         
